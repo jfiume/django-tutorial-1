@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 # Create your views here.
 from django.http import HttpResponse
 from django.http import Http404
@@ -25,8 +25,5 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 def detail(request, question_id):
-    try:
-        question = Quesiton.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
+    question = get_object_or_404(Quesiton, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
